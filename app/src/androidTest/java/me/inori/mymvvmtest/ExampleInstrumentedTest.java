@@ -1,4 +1,4 @@
-package inori.me.mymvvmtest;
+package me.inori.mymvvmtest;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("inori.me.mymvvmtest", appContext.getPackageName());
+        assertEquals("me.inori.mymvvmtest", appContext.getPackageName());
     }
 }

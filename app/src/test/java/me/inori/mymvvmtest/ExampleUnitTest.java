@@ -1,4 +1,4 @@
-package inori.me.mymvvmtest;
+package me.inori.mymvvmtest;
 
 import org.junit.Test;
 

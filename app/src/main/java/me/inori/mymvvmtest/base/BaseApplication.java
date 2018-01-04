@@ -6,5 +6,6 @@ import android.app.Application;
  * Created by hjx on 2017/12/19.
  */
 
-public class OnlineUser extends Application {
+public class BaseApplication extends Application {
+
 }

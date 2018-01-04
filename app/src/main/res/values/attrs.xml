@@ -1,0 +1,32 @@
+<resources>
+
+
+    <declare-styleable name="CircleView">
+        <attr name="bgcolor" format="color" />
+        <attr name="patterntype" format="integer" >
+            <enum name="add" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="MyProgressView">
+        <attr name="active" format="boolean" />
+        <attr name="line" format="boolean" />
+        <attr name="title" format="string" />
+        <attr name="circlebackgroud" format="reference" />
+        <attr name="circleurl" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="NiceSpinner">
+        <attr name="arrowTint" format="color" />
+        <attr name="hideArrow" format="boolean" />
+        <attr name="backgroundSelector" format="integer"/>
+        <attr name="textTint" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="LazyPhotoPicker">
+    </declare-styleable>
+    <declare-styleable name="LazyPhotoPreview">
+    </declare-styleable>
+
+
+</resources>
