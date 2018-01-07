@@ -4,6 +4,7 @@ import android.app.Application;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * Created by hjx on 2017/12/19.
@@ -11,23 +12,33 @@ import java.util.Map;
 
 public class BaseApplication extends Application {
     //退出时全部关闭
-    private Map<String,BaseActivity> activityMap;
+    private Stack<BaseActivity> activityStack;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        activityMap = new HashMap<>();
+        activityStack = new Stack<>();
     }
 
     public void addActivity(BaseActivity bActivity){
-        activityMap.put(bActivity.getClass().getName(),bActivity);
+        activityStack.push(bActivity);
+    }
+    public BaseActivity getCurrentActivity(){
+        return activityStack.peek();
+    }
+    public void finishCurrentActivity(){
+        activityStack.pop();
     }
 
     public void destoryAllActivity(){
-        activityMap.forEach((name,activity)->activity.finish());
-        activityMap.clear();
+//        activityStack.gforEach(a->a.finish());
+        for(BaseActivity base:activityStack){
+            base.finish();
+        }
+        activityStack.clear();
         System.gc();
     }
+
 
 
 }

@@ -14,5 +14,5 @@ public interface Config {
     String IMG_RELEASE = "img/";
 
     String IMG_PRE = isDebug ? IMG_DEBUG : IMG_RELEASE;
-    String IMGURLDOWN = SERVER_URL + "gmo/" + IMG_PRE;
+    String IMGURLDOWN = SERVER_URL + "iml/" + IMG_PRE;
 }

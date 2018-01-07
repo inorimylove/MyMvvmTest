@@ -2,27 +2,21 @@ package me.inori.mymvvmtest.mvvm.view.main;
 
 import android.os.Bundle;
 
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import me.inori.mymvvmtest.R;
+import me.inori.mymvvmtest.base.BaseActivity;
 
 /**
  * Created by hjx on 2018/1/2.
  */
 
-public class MainActivity extends RxAppCompatActivity {
+public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 
     @Override
     protected void onDestroy() {
