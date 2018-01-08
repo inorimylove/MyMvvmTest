@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">eshop</string>
+    <string name="app_name">mymusic</string>
+
+    <string name="splash_mymusic">我的音乐</string>
 </resources>

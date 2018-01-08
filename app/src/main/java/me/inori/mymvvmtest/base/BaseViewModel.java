@@ -1,6 +1,7 @@
 package me.inori.mymvvmtest.base;
 
 import com.kelin.mvvmlight.base.ViewModel;
+import com.kelin.mvvmlight.messenger.Messenger;
 
 /**
  * Created by hjx on 2018/1/5.
@@ -8,10 +9,12 @@ import com.kelin.mvvmlight.base.ViewModel;
 
 public class BaseViewModel implements ViewModel {
 
-    private BaseActivity mContext;
-
-
-    public void destory(){
+    protected BaseApplication mContext;
+    public BaseViewModel(BaseApplication mContext){
+        this.mContext = mContext;
+    }
+    public void onDestroy(){
+        Messenger.getDefault().unregister(mContext.getCurrentActivity());
         mContext =null;
     }
 }

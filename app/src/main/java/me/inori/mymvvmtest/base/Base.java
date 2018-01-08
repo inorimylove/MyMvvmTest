@@ -12,16 +12,16 @@ public class Base {
 
     private static Base mbase;
 
-    public Base(){
 
-    }
     public Base(BaseApplication mContext){
             this.mContext = mContext;
+//            loadingDialog.setOnCancelListener((dialogInterface -> canceled = true));
     }
     public static Base newinstance(BaseApplication mContext){
         if(mbase == null){
             mbase = new Base(mContext);
         }
+
         return mbase;
     }
     /**
