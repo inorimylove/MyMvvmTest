@@ -4,8 +4,6 @@ import android.app.Application;
 
 import java.util.Stack;
 
-import me.inori.mymvvmtest.utils.ConnectionDetector;
-
 /**
  * Created by hjx on 2017/12/19.
  */
@@ -13,13 +11,14 @@ import me.inori.mymvvmtest.utils.ConnectionDetector;
 public class BaseApplication extends Application {
     //退出时全部关闭
     private Stack<BaseActivity> activityStack;
+    private static Base base;
     //判断网络
 
     @Override
     public void onCreate() {
         super.onCreate();
         activityStack = new Stack<>();
-        ConnectionDetector.newinstance(this);
+        base = Base.newinstance(this);
     }
 
     public void addActivity(BaseActivity bActivity){
@@ -38,13 +37,18 @@ public class BaseApplication extends Application {
             base.finish();
         }
         activityStack.clear();
+        base.onDestroy();
+        base = null;
         System.gc();
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        ConnectionDetector.destory();
+
     }
 
+    public static Base getBase() {
+        return base;
+    }
 }
