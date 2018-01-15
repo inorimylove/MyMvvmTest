@@ -69,8 +69,8 @@ public class BaseActivity extends RxAppCompatActivity {
         }
     }
 
-    public <T extends View> T findBViewById(@IdRes int id){
-        return (T)binding.getRoot().findViewById(id);
+    public View findBViewById(@IdRes int id){
+        return binding.getRoot().findViewById(id);
     }
 
     public BaseActivity setBinding(ViewDataBinding dataBinding){
