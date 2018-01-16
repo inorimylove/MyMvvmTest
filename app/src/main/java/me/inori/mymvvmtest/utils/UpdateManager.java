@@ -1,28 +1,22 @@
 package me.inori.mymvvmtest.utils;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.trello.rxlifecycle.ActivityLifecycleProvider;
 
-import java.io.IOException;
-
-import me.inori.mymvvmtest.base.Config;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
+import me.inori.mymvvmtest.base.BaseApplication;
+import me.inori.mymvvmtest.mvvm.service.UpdateService;
+import me.inori.mymvvmtest.retrofit.RetrofitProvider;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 /**
  * Created by hjx on 2018/1/8.
  */
 
 public class UpdateManager {
 
-    private Context mContext;
+    private BaseApplication mContext;
     private String appname;
 
     //需要获取远程版本
@@ -30,7 +24,7 @@ public class UpdateManager {
     private String currentVersion;
     private boolean islastestVersion;
 
-    public UpdateManager(Context mContext){
+    public UpdateManager(BaseApplication mContext){
         this.mContext = mContext;
         islastestVersion =false;
     }
@@ -44,31 +38,15 @@ public class UpdateManager {
 
 
     private void updateRemoteVision(){
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .get()
-                .url(Config.APP_CheckUpdateURL)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        RetrofitProvider.getInstance().create(UpdateService.class)
+                .getRemoteVersion()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(((ActivityLifecycleProvider) mContext.getCurrentActivity()).bindToLifecycle())
+                .subscribe(version -> {
+                    remoteVersion = version.getVerName();
+                });
 
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String verjson = response.body().string();
-                    if(!TextUtils.isEmpty(verjson)){
-                        try {
-                            JSONObject obj = new JSONObject(verjson);
-                            remoteVersion = obj.getString("verName");
-                        }catch (JSONException e){
-                            remoteVersion = currentVersion;
-                        }
-                    }
-                }
-            }
-        });
     }
     private void updateCurrentVision(){
         try {

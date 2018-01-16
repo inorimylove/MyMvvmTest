@@ -3,17 +3,19 @@ package me.inori.mymvvmtest.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import me.inori.mymvvmtest.base.BaseApplication;
+
 public class SharedHelper {
 
-    private Context mContext;
+    private BaseApplication mContext;
 
     public final static String KEY_RemoteVersion = "remoteVersion";
     public final static String KEY_DownloadVesion = "downLoadVersion";
     public final static String KEY_LastUser = "lastUser";
     public final static String KEY_LastPWD = "lastPWD";
 
-    public SharedHelper(Context mContext) {
-        this.mContext = mContext;
+    public SharedHelper(BaseApplication mContext) {
+        this.mContext =  mContext;
     }
 
     //保存

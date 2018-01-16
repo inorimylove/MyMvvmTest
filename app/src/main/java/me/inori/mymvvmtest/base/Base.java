@@ -2,6 +2,7 @@ package me.inori.mymvvmtest.base;
 
 import android.widget.Toast;
 
+import me.inori.mymvvmtest.customView.LoadingDialog;
 import me.inori.mymvvmtest.utils.ConnectionDetector;
 import me.inori.mymvvmtest.utils.SharedHelper;
 import me.inori.mymvvmtest.utils.UpdateManager;
@@ -21,6 +22,9 @@ public class Base {
     private ConnectionDetector cDetector;
     //app更新判断
     private UpdateManager uManager;
+
+    private LoadingDialog loadingDialog;
+
 
     public Base(BaseApplication mContext){
         this.mContext = mContext;
@@ -62,6 +66,16 @@ public class Base {
 
     public String shread(String key){
         return sHelper.read(key);
+    }
+
+    public void showloading(){
+        loadingDialog = new LoadingDialog(mContext.getCurrentActivity());
+        loadingDialog.show();
+    }
+    public void dismissLoading() {
+        loadingDialog.dismiss();
+        loadingDialog = null;
+
     }
 
     public void onDestroy(){

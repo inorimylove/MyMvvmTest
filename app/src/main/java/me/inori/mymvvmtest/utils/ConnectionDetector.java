@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import me.inori.mymvvmtest.base.BaseApplication;
+
 /**
  * Created by hjx on 2018/1/8.
  */
@@ -13,10 +15,10 @@ public class ConnectionDetector {
     public static final int IS_WIFI = 1;
     public static final int IS_MOBILE = 2;
     private static int status = NO_INTENT;
-    private Context mcontext;
+    private BaseApplication mcontext;
 
     public ConnectionDetector (Context mcontext){
-        this.mcontext= mcontext;
+        this.mcontext=(BaseApplication) mcontext;
     }
 
     public  void destory(){

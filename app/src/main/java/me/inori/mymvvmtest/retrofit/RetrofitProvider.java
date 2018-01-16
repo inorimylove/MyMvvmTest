@@ -3,7 +3,7 @@ package me.inori.mymvvmtest.retrofit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import me.inori.mymvvmtest.base.Config;
+import me.inori.mymvvmtest.base.BaseConfig;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,19 +21,29 @@ public class RetrofitProvider {
 
     public static Retrofit getInstance(RetrofitType type) {
 
-        if (retrofit == null) {
+
 
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd HH:mm:ss")
 //                    .registerTypeAdapterFactory(new ApiTypeAdapterFactory())
                     .create();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(Config.SERVER_URL)
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-        }
 
+
+            switch (type){
+                case default_down_Type:
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(BaseConfig.SERVER_URL)
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .build();
+                    break;
+                default:
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(BaseConfig.SERVER_URL)
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create(gson))
+                            .build();
+                    break;
+            }
 
         return retrofit;
 
