@@ -2,7 +2,7 @@ package me.inori.mymvvmtest.mvvm.viewmodel;
 
 import android.databinding.ObservableBoolean;
 
-import me.inori.mymvvmtest.base.BaseApplication;
+import me.inori.mymvvmtest.base.BaseApp;
 import me.inori.mymvvmtest.base.BaseViewModel;
 
 /**
@@ -12,23 +12,23 @@ import me.inori.mymvvmtest.base.BaseViewModel;
 public class SplashViewModel extends BaseViewModel {
 
     //是否需要更新
-    public final ObservableBoolean isneedupdate = new ObservableBoolean();
+    public final ObservableBoolean isneedupdate = new ObservableBoolean(false);
     //是否可进入
-    public final ObservableBoolean ishow = new ObservableBoolean();
+    public final ObservableBoolean ishow = new ObservableBoolean(false);
 
-    public SplashViewModel(BaseApplication mContext) {
+    public SplashViewModel(BaseApp mContext) {
         super(mContext);
         initdata();
-        updateApp();
+
     }
 
     private void initdata(){
-        ishow.set(false);
-        isneedupdate.set(false);
+//        ishow.set(false);
+//        isneedupdate.set(false);
     }
 
-    private void updateApp(){
-        if(isLastestVesrion()){
+    public void checkupdateApp(){
+        if(BaseApp.getBase().islastestVesion()){
             ishow.set(true);
             return;
         }else {
@@ -36,8 +36,5 @@ public class SplashViewModel extends BaseViewModel {
         }
     }
 
-    private boolean isLastestVesrion(){
-        return BaseApplication.getBase().islastestVesion();
-    }
 
 }

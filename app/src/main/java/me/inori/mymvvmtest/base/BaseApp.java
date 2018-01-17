@@ -8,7 +8,7 @@ import java.util.Stack;
  * Created by hjx on 2017/12/19.
  */
 
-public class BaseApplication extends Application {
+public class BaseApp extends Application {
     //退出时全部关闭
     private Stack<BaseActivity> activityStack;
     private static Base base;

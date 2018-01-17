@@ -1,12 +1,13 @@
-package me.inori.mymvvmtest.utils;
+package me.inori.mymvvmtest.mvvm.utils.manager;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.trello.rxlifecycle.ActivityLifecycleProvider;
 
-import me.inori.mymvvmtest.base.BaseApplication;
+import me.inori.mymvvmtest.base.BaseApp;
 import me.inori.mymvvmtest.mvvm.service.UpdateService;
+import me.inori.mymvvmtest.retrofit.ExceptionHandler;
 import me.inori.mymvvmtest.retrofit.RetrofitProvider;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -16,7 +17,7 @@ import rx.schedulers.Schedulers;
 
 public class UpdateManager {
 
-    private BaseApplication mContext;
+    private BaseApp mContext;
     private String appname;
 
     //需要获取远程版本
@@ -24,7 +25,7 @@ public class UpdateManager {
     private String currentVersion;
     private boolean islastestVersion;
 
-    public UpdateManager(BaseApplication mContext){
+    public UpdateManager(BaseApp mContext){
         this.mContext = mContext;
         islastestVersion =false;
     }
@@ -45,7 +46,7 @@ public class UpdateManager {
                 .compose(((ActivityLifecycleProvider) mContext.getCurrentActivity()).bindToLifecycle())
                 .subscribe(version -> {
                     remoteVersion = version.getVerName();
-                });
+                }, ExceptionHandler::handleException);
 
     }
     private void updateCurrentVision(){

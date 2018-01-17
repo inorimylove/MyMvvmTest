@@ -1,20 +1,20 @@
-package me.inori.mymvvmtest.utils;
+package me.inori.mymvvmtest.mvvm.utils.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import me.inori.mymvvmtest.base.BaseApplication;
+import me.inori.mymvvmtest.base.BaseApp;
 
-public class SharedHelper {
+public class SharedManager {
 
-    private BaseApplication mContext;
+    private BaseApp mContext;
 
     public final static String KEY_RemoteVersion = "remoteVersion";
     public final static String KEY_DownloadVesion = "downLoadVersion";
     public final static String KEY_LastUser = "lastUser";
     public final static String KEY_LastPWD = "lastPWD";
 
-    public SharedHelper(BaseApplication mContext) {
+    public SharedManager(BaseApp mContext) {
         this.mContext =  mContext;
     }
 

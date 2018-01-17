@@ -1,11 +1,21 @@
 package me.inori.mymvvmtest.base;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.widget.Toast;
 
 import me.inori.mymvvmtest.customView.LoadingDialog;
-import me.inori.mymvvmtest.utils.ConnectionDetector;
-import me.inori.mymvvmtest.utils.SharedHelper;
-import me.inori.mymvvmtest.utils.UpdateManager;
+import me.inori.mymvvmtest.mvvm.utils.helper.UIHelper;
+import me.inori.mymvvmtest.mvvm.utils.manager.ApkManager;
+import me.inori.mymvvmtest.mvvm.utils.manager.ConnectionManager;
+import me.inori.mymvvmtest.mvvm.utils.manager.SharedManager;
+import me.inori.mymvvmtest.mvvm.utils.manager.UpdateManager;
+
 
 /**
  * Created by hjx on 2018/1/5.
@@ -13,31 +23,33 @@ import me.inori.mymvvmtest.utils.UpdateManager;
 
 public class Base {
 
-    private BaseApplication mContext;
+    private BaseApp mContext;
 
     private static Base mbase;
     //写入写出
-    private SharedHelper sHelper;
+    private SharedManager sHelper;
     //网络连接判断
-    private ConnectionDetector cDetector;
+    private ConnectionManager cManager;
     //app更新判断
     private UpdateManager uManager;
 
     private LoadingDialog loadingDialog;
 
+    private ApkManager apkManager;
 
-    public Base(BaseApplication mContext){
+
+    public Base(BaseApp mContext){
         this.mContext = mContext;
-        sHelper = new SharedHelper(mContext);
-        cDetector = new ConnectionDetector(mContext);
+        sHelper = new SharedManager(mContext);
+        cManager = new ConnectionManager(mContext);
         uManager = new UpdateManager(mContext);
+        apkManager = new ApkManager(mContext);
 //            loadingDialog.setOnCancelListener((dialogInterface -> canceled = true));
     }
-    public static Base newinstance(BaseApplication mContext){
+    public static Base newinstance(BaseApp mContext){
         if(mbase == null){
             mbase = new Base(mContext);
         }
-
         return mbase;
     }
     /**
@@ -46,6 +58,87 @@ public class Base {
     public void makeToast(String str){
         Toast.makeText(mContext.getCurrentActivity(), str, Toast.LENGTH_SHORT).show();
     }
+    public void makeToast(@StringRes int id) {
+        makeToast(mContext.getString(id));
+    }
+
+
+
+    //弹SnackBar
+    public void makeSBar(String str, View v) {
+        UIHelper.hideAllInput(mContext.getCurrentActivity());
+        Snackbar snackbar = Snackbar.make(v, str, Snackbar.LENGTH_LONG);
+        UIHelper.setSnackbarMsgTextColor(snackbar, Color.WHITE);
+        snackbar.show();
+    }
+
+    //弹SnackBar
+    public void makeSBar(String str) {
+        View v = mContext.getCurrentActivity().getCurrentFocus();
+        UIHelper.hideAllInput(mContext.getCurrentActivity());
+        Snackbar snackbar = Snackbar.make(v, str, Snackbar.LENGTH_LONG);
+        UIHelper.setSnackbarMsgTextColor(snackbar, Color.WHITE);
+        snackbar.show();
+    }
+    //弹Snack Bar
+    public void makeSBar(@StringRes int id, View v) {
+        makeSBar(mContext.getCurrentActivity().getString(id), v);
+    }
+
+    public void jumpToAndFinish(Class dst) {
+        BaseActivity baseActivity = mContext.getCurrentActivity();
+        Intent intent = new Intent();
+        intent.setClass(baseActivity, dst);
+        baseActivity.startActivity(intent);
+        baseActivity.finish();
+    }
+
+    public void jumpToAndFinish(Class dst, Bundle data) {
+        BaseActivity baseActivity = mContext.getCurrentActivity();
+        Intent intent = new Intent();
+        intent.putExtras(data);
+        intent.setClass(baseActivity, dst);
+        baseActivity.startActivity(intent);
+        baseActivity.finish();
+    }
+
+    public void jumpTo(Class dst) {
+        BaseActivity baseActivity = mContext.getCurrentActivity();
+        Intent intent = new Intent();
+        intent.setClass(baseActivity, dst);
+        baseActivity.startActivity(intent);
+    }
+
+    public void jumpTo(Class dst, Bundle data) {
+        BaseActivity baseActivity = mContext.getCurrentActivity();
+        Intent intent = new Intent();
+        intent.putExtras(data);
+        intent.setClass(baseActivity, dst);
+        baseActivity.startActivity(intent);
+    }
+
+    public void jumpForRE(Class dst, int requestCode) {
+        BaseActivity baseActivity = mContext.getCurrentActivity();
+        Intent intent = new Intent();
+        intent.setClass(baseActivity, dst);
+        baseActivity.startActivityForResult(intent, requestCode);
+    }
+
+    public void jumpForRE(Context context, Class dst, int requestCode) {
+        BaseActivity baseActivity = mContext.getCurrentActivity();
+        Intent intent = new Intent();
+        intent.setClass(context, dst);
+        baseActivity.startActivityForResult(intent, requestCode);
+    }
+
+    public void jumpForRE(Class dst, Bundle data, int requestCode) {
+        BaseActivity baseActivity = mContext.getCurrentActivity();
+        Intent intent = new Intent();
+        intent.putExtras(data);
+        intent.setClass(baseActivity, dst);
+        baseActivity.startActivityForResult(intent, requestCode);
+    }
+
     //判断版本是否最新
     public boolean islastestVesion(){
         return uManager.islastestVesion();
@@ -57,7 +150,7 @@ public class Base {
      * IS_MOBILE = 2;
      */
     public int getConnectStatus(){
-        return cDetector.getConnectStatus();
+        return cManager.getConnectStatus();
     }
     //SharedPreferences 存读
     public void shsave(String key,String value){
@@ -76,6 +169,9 @@ public class Base {
         loadingDialog.dismiss();
         loadingDialog = null;
 
+    }
+    public void installapk(){
+        apkManager.installAppk();
     }
 
     public void onDestroy(){

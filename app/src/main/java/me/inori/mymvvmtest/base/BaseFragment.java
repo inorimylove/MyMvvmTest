@@ -20,8 +20,9 @@ import java.util.List;
  */
 
 public class BaseFragment extends RxFragment {
-    protected BaseApplication mContext;
+    protected BaseApp mContext;
     protected BaseActivity bActivity;
+    protected Base base;
 
     private ViewDataBinding binding;
     private List<BaseViewModel> viewModels;
@@ -37,8 +38,8 @@ public class BaseFragment extends RxFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bActivity = (BaseActivity) getActivity();
-        mContext = (BaseApplication) bActivity.getApplication();
-
+        mContext = (BaseApp) bActivity.getApplication();
+        base = BaseApp.getBase();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package me.inori.mymvvmtest.utils;
+package me.inori.mymvvmtest.mvvm.utils.helper;
 
 import java.io.File;
 

@@ -22,7 +22,8 @@ import me.inori.mymvvmtest.customView.LoadingDialog;
 public class BaseActivity extends RxAppCompatActivity {
 
 
-    protected BaseApplication mContext;
+    protected BaseApp mContext;
+    protected Base base;
 
     private ViewDataBinding binding;
     private List<BaseViewModel> viewModels;
@@ -34,8 +35,9 @@ public class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = (BaseApplication) getApplication();
+        mContext = (BaseApp) getApplication();
         mContext.addActivity(this);
+        base = BaseApp.getBase();
         loadingDialog = new LoadingDialog(this);
 
     }
@@ -46,7 +48,7 @@ public class BaseActivity extends RxAppCompatActivity {
         mContext.finishCurrentActivity();
         viewModels.stream().filter(v->v!=null).forEach(v->v.onDestroy());
         viewModels.clear();
-
+        base = null;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class BaseActivity extends RxAppCompatActivity {
 
         if(System.currentTimeMillis()-time>2000){
             time = System.currentTimeMillis();
-            BaseApplication.getBase().makeToast("再按一次退出");
+            BaseApp.getBase().makeToast("再按一次退出");
         }else {
             mContext.destoryAllActivity();
         }

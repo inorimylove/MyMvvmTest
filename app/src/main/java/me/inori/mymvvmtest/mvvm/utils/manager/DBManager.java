@@ -1,9 +1,9 @@
-package me.inori.mymvvmtest.utils;
+package me.inori.mymvvmtest.mvvm.utils.manager;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import me.inori.mymvvmtest.base.BaseApplication;
+import me.inori.mymvvmtest.base.BaseApp;
 import me.inori.mymvvmtest.base.BaseConfig;
 
 /**
@@ -11,10 +11,10 @@ import me.inori.mymvvmtest.base.BaseConfig;
  */
 
 
-public class DBHelper extends SQLiteOpenHelper  {
-    private BaseApplication mContext;
+public class DBManager extends SQLiteOpenHelper  {
+    private BaseApp mContext;
     private static final int DB_VERSION = 1;
-    public DBHelper (BaseApplication mContext){
+    public DBManager(BaseApp mContext){
         super(mContext, BaseConfig.dbName, null, DB_VERSION);
     }
 

@@ -9,8 +9,8 @@ import com.kelin.mvvmlight.messenger.Messenger;
 
 public class BaseViewModel implements ViewModel {
 
-    protected BaseApplication mContext;
-    public BaseViewModel(BaseApplication mContext){
+    protected BaseApp mContext;
+    public BaseViewModel(BaseApp mContext){
         this.mContext = mContext;
     }
     public void onDestroy(){

@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class BaseDialogFragment extends RxDialogFragment {
-    protected BaseApplication mContext;
+    protected BaseApp mContext;
     protected BaseActivity bActivity;
 
     private ViewDataBinding binding;
@@ -38,7 +38,7 @@ public class BaseDialogFragment extends RxDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bActivity = (BaseActivity) getActivity();
-        mContext = (BaseApplication) bActivity.getApplication();
+        mContext = (BaseApp) bActivity.getApplication();
 
     }
 

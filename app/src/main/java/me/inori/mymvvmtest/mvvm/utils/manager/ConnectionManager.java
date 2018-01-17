@@ -1,24 +1,24 @@
-package me.inori.mymvvmtest.utils;
+package me.inori.mymvvmtest.mvvm.utils.manager;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import me.inori.mymvvmtest.base.BaseApplication;
+import me.inori.mymvvmtest.base.BaseApp;
 
 /**
  * Created by hjx on 2018/1/8.
  */
 
-public class ConnectionDetector {
+public class ConnectionManager {
     public static final int NO_INTENT = -1;
     public static final int IS_WIFI = 1;
     public static final int IS_MOBILE = 2;
     private static int status = NO_INTENT;
-    private BaseApplication mcontext;
+    private BaseApp mcontext;
 
-    public ConnectionDetector (Context mcontext){
-        this.mcontext=(BaseApplication) mcontext;
+    public ConnectionManager(Context mcontext){
+        this.mcontext=(BaseApp) mcontext;
     }
 
     public  void destory(){
