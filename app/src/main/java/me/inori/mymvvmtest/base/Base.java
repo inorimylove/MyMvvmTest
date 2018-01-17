@@ -26,6 +26,8 @@ public class Base {
     private BaseApp mContext;
 
     private static Base mbase;
+    //用户状态
+
     //写入写出
     private SharedManager sHelper;
     //网络连接判断
@@ -36,6 +38,7 @@ public class Base {
     private LoadingDialog loadingDialog;
 
     private ApkManager apkManager;
+
 
 
     public Base(BaseApp mContext){

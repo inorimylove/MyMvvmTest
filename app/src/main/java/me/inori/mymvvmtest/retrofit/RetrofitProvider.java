@@ -22,7 +22,6 @@ public class RetrofitProvider {
     public static Retrofit getInstance(RetrofitType type) {
 
 
-
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd HH:mm:ss")
 //                    .registerTypeAdapterFactory(new ApiTypeAdapterFactory())
@@ -48,7 +47,7 @@ public class RetrofitProvider {
         return retrofit;
 
     }
-    public static Retrofit getInstance(){
+    public static Retrofit getInstance() {
         return getInstance(default_Type);
     }
     //default 项目相关的，约定返回值解析方式和baseurl
