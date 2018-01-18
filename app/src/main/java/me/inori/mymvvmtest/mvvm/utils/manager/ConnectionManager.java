@@ -29,13 +29,18 @@ public class ConnectionManager {
         ConnectivityManager cm=(ConnectivityManager) mcontext.getSystemService(Context.CONNECTIVITY_SERVICE);
         // 获取代表联网状态的NetWorkInfo对象
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if(networkInfo==null){
+            return NO_INTENT;
+        }
            switch (networkInfo.getType()){
                case ConnectivityManager.TYPE_VPN:
                case ConnectivityManager.TYPE_WIFI:
                    status =IS_WIFI;
+                   break;
                case ConnectivityManager.TYPE_MOBILE:
                case ConnectivityManager.TYPE_MOBILE_DUN:
                    status =IS_MOBILE;
+                   break;
            }
            if(!networkInfo.isConnected()){
                status = NO_INTENT;

@@ -10,11 +10,12 @@ import java.io.IOException;
 
 import me.inori.mymvvmtest.base.BaseApp;
 import me.inori.mymvvmtest.base.BaseConfig;
+import me.inori.mymvvmtest.base.BaseSubscriber;
 import me.inori.mymvvmtest.base.BaseViewModel;
 import me.inori.mymvvmtest.mvvm.service.UpdateService;
 import me.inori.mymvvmtest.mvvm.utils.helper.FileHelper;
-import me.inori.mymvvmtest.retrofit.ExceptionHandler;
 import me.inori.mymvvmtest.retrofit.RetrofitProvider;
+import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSink;
 import okio.BufferedSource;
@@ -60,28 +61,33 @@ public class SplashViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(((ActivityLifecycleProvider) mContext.getCurrentActivity()).bindToLifecycle())
-                .subscribe(response -> {
-                    try {
-                        File f = FileHelper.createFile(BaseConfig.apk_URL);
-                        BufferedSink sink = Okio.buffer(Okio.sink(f));
-                        BufferedSource source = response.source();
-                        long total = response.contentLength();
-                        long curent = 0;
-                        long len;
-                        int bufferSize =  1024; //200kb
-                        Buffer buffer = sink.buffer();
-                        while ((len = source.read(buffer, bufferSize)) != -1) {
-                            sink.emit();
-                            curent += len;
-                            process.set((float)curent / total);
+                .subscribe(new BaseSubscriber<ResponseBody>(){
+                    @Override
+                    public void onNext(ResponseBody response) {
+                        try {
+                            File f = FileHelper.createFile(BaseConfig.apk_URL);
+                            BufferedSink sink = Okio.buffer(Okio.sink(f));
+                            BufferedSource source = response.source();
+                            long total = response.contentLength();
+                            long curent = 0;
+                            long len;
+                            int bufferSize =  1024; //200kb
+                            Buffer buffer = sink.buffer();
+                            while ((len = source.read(buffer, bufferSize)) != -1) {
+                                sink.emit();
+                                curent += len;
+                                process.set((float)curent / total);
+                            }
+                            source.close();
+                            sink.close();
                         }
-                        source.close();
-                        sink.close();
-                    }
-                    catch (IOException e){
+                        catch (IOException e){
 
+                        }
                     }
-                }, ExceptionHandler::handleException);
+                }
+
+        );
     }
 
 

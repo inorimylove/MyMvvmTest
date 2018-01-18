@@ -6,11 +6,13 @@ import android.content.pm.PackageManager;
 import com.trello.rxlifecycle.ActivityLifecycleProvider;
 
 import me.inori.mymvvmtest.base.BaseApp;
+import me.inori.mymvvmtest.base.BaseSubscriber;
+import me.inori.mymvvmtest.mvvm.entity.VersionJson;
 import me.inori.mymvvmtest.mvvm.service.UpdateService;
-import me.inori.mymvvmtest.retrofit.ExceptionHandler;
 import me.inori.mymvvmtest.retrofit.RetrofitProvider;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
 /**
  * Created by hjx on 2018/1/8.
  */
@@ -44,9 +46,15 @@ public class UpdateManager {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(((ActivityLifecycleProvider) mContext.getCurrentActivity()).bindToLifecycle())
-                .subscribe(version -> {
-                    remoteVersion = version.getVerName();
-                }, ExceptionHandler::handleException);
+                .subscribe(new BaseSubscriber<VersionJson>(){
+                    @Override
+                    public void onCompleted(){
+                    }
+                    @Override
+                    public void onNext(VersionJson versionJson) {
+                        remoteVersion = versionJson.getVerName();
+                    }
+                });
 
     }
     private void updateCurrentVision(){
