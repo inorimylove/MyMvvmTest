@@ -1,6 +1,7 @@
-package me.inori.mymvvmtest.mvvm.view.main;
+package me.inori.mymvvmtest.mvvm.view.login;
 
 import android.databinding.Observable;
+import android.databinding.ObservableFloat;
 import android.os.Bundle;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -8,7 +9,8 @@ import me.inori.mymvvmtest.R;
 import me.inori.mymvvmtest.base.BaseActivity;
 import me.inori.mymvvmtest.base.BaseApp;
 import me.inori.mymvvmtest.mvvm.utils.manager.ConnectionManager;
-import me.inori.mymvvmtest.mvvm.viewmodel.SplashViewModel;
+import me.inori.mymvvmtest.mvvm.viewmodel.login.SplashViewModel;
+
 
 /**
  * Created by hjx on 2018/1/2.
@@ -33,8 +35,8 @@ public class SplashActivity extends BaseActivity {
                 }
             }
         } );
-
-        splashViewModel.checkupdateApp();
+        //开始它的表演
+        splashViewModel.startService();
     }
 
 
@@ -52,13 +54,18 @@ public class SplashActivity extends BaseActivity {
         splashViewModel.process.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable observable, int i) {
-                float process = splashViewModel.process.get();
+                float process = ((ObservableFloat)observable).get();
+                base.makeToast("已下载"+ process * 100 + "%");
+
                 if(process!=1) {
                     progressDialog.setContentText("已下载" + process * 100 + "%");
                     progressDialog.getProgressHelper().setProgress(process);
                 }
                 else {
                     base.makeToast("下载完成");
+                    progressDialog.dismiss();
+                    base.installapk();
+
                 }
             }
         } );

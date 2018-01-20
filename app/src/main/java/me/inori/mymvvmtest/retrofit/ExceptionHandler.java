@@ -64,7 +64,7 @@ public class ExceptionHandler {
             return ex;
         } else if (e instanceof ConnectException) {
             ex = new ResponseThrowable(e, ERROR.NETWORD_ERROR);
-            ex.message = "连接失败";
+            ex.message = "当前网络不可用,请检查您的网络设置";
             BaseApp.getBase().makeToast(ex.message);
             return ex;
         } else if (e instanceof javax.net.ssl.SSLHandshakeException) {

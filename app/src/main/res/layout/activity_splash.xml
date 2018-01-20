@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="me.inori.mymvvmtest.mvvm.viewmodel.SplashViewModel" />
+            type="me.inori.mymvvmtest.mvvm.viewmodel.login.SplashViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -14,17 +14,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/splash">
-        <Button
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bt_corner_stroke"
-            android:typeface="serif"
-            android:textSize="20sp"
-            android:textColor="@color/white"
+            android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:text="@string/splash_mymusic"
-            android:visibility="@{viewModel.ishow.get()?View.VISIBLE:View.GONE}"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bt_corner_stroke"
+                android:typeface="serif"
+                android:textSize="20sp"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:text="@string/splash_login"
+                android:visibility="@{viewModel.ishow.get()?View.VISIBLE:View.GONE}"
+                bind:clickCommand="@{viewModel.loginClike}"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bt_corner_stroke"
+                android:typeface="serif"
+                android:textSize="20sp"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:text="@string/splash_mymusic"
+                android:visibility="@{viewModel.ishow.get()?View.VISIBLE:View.GONE}"
+                bind:clickCommand="@{viewModel.guestClike}"/>
+        </LinearLayout>
     </RelativeLayout>
+
 </layout>

@@ -27,7 +27,7 @@ public class Base {
 
     private static Base mbase;
     //用户状态
-
+    private UserInfo userInfo;
     //写入写出
     private SharedManager sHelper;
     //网络连接判断
@@ -55,6 +55,14 @@ public class Base {
         }
         return mbase;
     }
+
+    //get
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+
+
     /**
      * 通用方法
      */
@@ -143,9 +151,10 @@ public class Base {
     }
 
     //判断版本是否最新
-    public boolean islastestVesion(){
-        return uManager.islastestVesion();
-    }
+   public void doCheck(UpdateManager.CheckCallBack checkCallBack) {
+       uManager.doCheck(checkCallBack);
+   }
+
     /**
      * 获取联网状态
      * NO_INTENT = -1
@@ -169,7 +178,9 @@ public class Base {
         loadingDialog.show();
     }
     public void dismissLoading() {
-        loadingDialog.dismiss();
+        if(loadingDialog!=null&&loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
         loadingDialog = null;
 
     }
@@ -180,4 +191,5 @@ public class Base {
     public void onDestroy(){
 
     }
+
 }
