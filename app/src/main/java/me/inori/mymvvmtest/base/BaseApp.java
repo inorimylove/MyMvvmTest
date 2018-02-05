@@ -30,7 +30,9 @@ public class BaseApp extends Application {
     public void finishCurrentActivity(){
         activityStack.pop();
     }
-
+    public void finishCurrentActivity(BaseActivity baseActivity){
+        activityStack.remove(baseActivity);
+    }
     public void destoryAllActivity(){
 //        activityStack.gforEach(a->a.finish());
         for(BaseActivity base:activityStack){

@@ -1,33 +1,7 @@
 package me.inori.mymvvmtest.mvvm.viewmodel.login;
 
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableFloat;
-
-import com.kelin.mvvmlight.command.ReplyCommand;
-import com.trello.rxlifecycle.ActivityLifecycleProvider;
-
-import java.io.File;
-import java.io.IOException;
-
 import me.inori.mymvvmtest.base.BaseApp;
-import me.inori.mymvvmtest.base.BaseConfig;
 import me.inori.mymvvmtest.base.BaseViewModel;
-import me.inori.mymvvmtest.mvvm.service.UpdateService;
-import me.inori.mymvvmtest.mvvm.utils.helper.FileHelper;
-import me.inori.mymvvmtest.mvvm.utils.helper.TextHelper;
-import me.inori.mymvvmtest.mvvm.utils.manager.ConnectionManager;
-import me.inori.mymvvmtest.mvvm.view.login.LoginActivity;
-import me.inori.mymvvmtest.mvvm.view.main.MainActivity;
-import me.inori.mymvvmtest.retrofit.ExceptionHandler;
-import me.inori.mymvvmtest.retrofit.RetrofitProvider;
-import okio.Buffer;
-import okio.BufferedSink;
-import okio.BufferedSource;
-import okio.Okio;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-import static me.inori.mymvvmtest.base.BaseApp.getBase;
 
 /**
  * Created by hjx on 2018/1/8.
@@ -35,7 +9,7 @@ import static me.inori.mymvvmtest.base.BaseApp.getBase;
 
 public class LoginViewModel extends BaseViewModel {
 
-    //是否需要更新
+ /*   //是否需要更新
     public final ObservableBoolean isneedupdate = new ObservableBoolean(false);
     //是否可进入
     public final ObservableBoolean ishow = new ObservableBoolean(false);
@@ -46,12 +20,13 @@ public class LoginViewModel extends BaseViewModel {
     });
     public final ReplyCommand guestClike = new ReplyCommand(() -> {
         BaseApp.getBase().jumpTo(MainActivity.class);
-    });
+    });*/
 
     public LoginViewModel(BaseApp mContext) {
         super(mContext);
     }
 
+/*
     public void startService(){
         if(getBase().getConnectStatus()== ConnectionManager.NO_INTENT){
             trytokenlogin();
@@ -114,6 +89,7 @@ public class LoginViewModel extends BaseViewModel {
             BaseApp.getBase().jumpTo(MainActivity.class);
         }
     }
+*/
 
 
 }

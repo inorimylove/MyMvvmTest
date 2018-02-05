@@ -20,6 +20,7 @@ import me.inori.mymvvmtest.mvvm.view.login.LoginActivity;
 import me.inori.mymvvmtest.mvvm.view.main.MainActivity;
 import me.inori.mymvvmtest.retrofit.ExceptionHandler;
 import me.inori.mymvvmtest.retrofit.RetrofitProvider;
+import me.inori.mymvvmtest.retrofit.mydownload.ProgressListener;
 import okio.Buffer;
 import okio.BufferedSink;
 import okio.BufferedSource;
@@ -72,8 +73,34 @@ public class SplashViewModel extends BaseViewModel {
 
     }
 
+
     public void downloadapp(){
-        RetrofitProvider.getInstance(RetrofitProvider.RetrofitType.default_down_Type).create(UpdateService.class)
+        final ProgressListener progressListener = new ProgressListener() {
+            boolean firstUpdate = true;
+
+            @Override public void update(long bytesRead, long contentLength, boolean done) {
+                if (done) {
+                    System.out.println("completed");
+                } else {
+                    if (firstUpdate) {
+                        firstUpdate = false;
+                        if (contentLength == -1) {
+                            System.out.println("content-length: unknown");
+                        } else {
+                            System.out.format("content-length: %d\n", contentLength);
+                        }
+                    }
+
+                    System.out.println(bytesRead);
+
+                    if (contentLength != -1) {
+                        System.out.format("%d%% done\n", (100 * bytesRead) / contentLength);
+//                        process.set((float) bytesRead / contentLength);
+                    }
+                }
+            }
+        };
+        RetrofitProvider.getInstance(RetrofitProvider.RetrofitType.default_down_Type,progressListener).create(UpdateService.class)
                 .getAPK()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,12 +113,12 @@ public class SplashViewModel extends BaseViewModel {
                         long total = response.contentLength();
                         long curent = 0L;
                         long len;
-                        long bufferSize = 1024L; //200kb
+                        long bufferSize = 1024L*20; //200kb
                         Buffer buffer = sink.buffer();
                         while ((len = source.read(buffer, bufferSize)) != -1) {
                             sink.emit();
                             curent += len;
-                           process.set((float) curent / total);
+                            System.out.print((float) curent / total);
                         }
                         source.close();
                         sink.close();
